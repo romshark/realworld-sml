@@ -6,7 +6,7 @@ use {
 	"std/crypto/scrypt" 1.0
 }
 
-User = user {
+User = entity {
 	email             EmailAddress
 	username          Username
 	bio               ?Text
