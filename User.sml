@@ -3,7 +3,6 @@ fragment realworld
 use {
 	"std" 1.0
 	"std/url" 1.0
-	"std/crypto/scrypt" 1.0
 }
 
 User = entity {
@@ -11,7 +10,7 @@ User = entity {
 	username          Username
 	bio               ?Text
 	image             ?url::Url
-	passwordHash      scrypt::Hash
+	passwordHash      PasswordHash
 	following         Set<User>
 	followers         Set<User>
 	publishedArticles Set<Article>
