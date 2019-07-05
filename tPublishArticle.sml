@@ -8,6 +8,8 @@ use {
 
 EvArticlePublished = event {
 	article Article
+
+	article ArticleResolver => ArticleResolver{article: this.article}
 }
 
 # PublishArticle is analogous to "POST /api/profiles/:username/follow"
@@ -63,7 +65,7 @@ PublishArticle = transaction(
 
 					// Notify all followers about a new article being published
 					std::event(author.followers, EvArticlePublished{
-						follower: follower,
+						article: newArticle,
 					}),
 				],
 				data: ArticleResolver{article: newArticle},
