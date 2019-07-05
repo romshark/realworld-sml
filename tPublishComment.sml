@@ -6,8 +6,10 @@ use {
 	"std/uuid" 1.0
 }
 
-EvArticlePublished = event {
-	article Article
+EvCommentPublished = event {
+	comment Comment
+
+	comment CommentResolver => CommentResolver{comment: this.comment}
 }
 
 # PublishComment is analogous to "POST /api/articles/:slug/comments"
@@ -70,12 +72,12 @@ PublishComment = transaction(
 
 					// Notify all the author about a new comment being published
 					std::event(
-						target as t {
+						[target as t {
 							Article then t.author
 							Comment then t.author
-						},
-						EvArticlePublished{
-							follower: follower,
+						}],
+						EvCommentPublished{
+							comment: newComment,
 						},
 					),
 				],
