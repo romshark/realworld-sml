@@ -5,7 +5,9 @@ use {
 }
 
 EvFollowed = event {
-	follower User
+	newFollower User
+
+	newFollower UserResolver => UserResolver{user: this.follower}
 }
 
 # FollowUser is analogous to "POST /api/profiles/:username/follow"
@@ -60,7 +62,7 @@ FollowUser = transaction(
 
 					// Notify the followee about a new follower subscription
 					std::event([followee], EvFollowed{
-						follower: follower,
+						newFollower: follower,
 					}),
 				],
 				data: UserResolver{user: updatedFollowerProfile},
