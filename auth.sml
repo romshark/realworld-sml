@@ -12,7 +12,7 @@ isOwner = (owner User) -> Bool => client() as u {
 
 # authOwner equals data if the current client is the owner,
 # otherwise equals ErrUnauth
-authOwner = (owner User, data @T) -> (@T or ErrUnauth) => match {
+authOwner = <D>(owner User, data D) -> (D or ErrUnauth) => match {
 	isOwner(owner) then data
 	else ErrUnauth{}
 }
