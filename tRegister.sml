@@ -24,10 +24,14 @@ Register = transaction(
 	ErrEmailReserved or
 	ErrUsernameReserved
 ) => {
-	userByEmail = entity<User>(predicate: (u) => u.email == email)
-	userByUsername = entity<User>(predicate: (u) => u.username == username)
+	userByEmail = entity<realworld::User>(
+		predicate: (u) => u.email == email,
+	)
+	userByUsername = entity<realworld::User>(
+		predicate: (u) => u.username == username,
+	)
 
-	newUser = User{
+	newUser = realworld::User{
 		email:             email,
 		username:          username,
 		bio:               bio,

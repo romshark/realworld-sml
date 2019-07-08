@@ -23,7 +23,9 @@ PublishComment = transaction(
 	ErrUserNotFound or
 	ErrTargetNotFound
 ) => {
-	author = entity<User>(predicate: (u) => u.username == authorUsername)
+	author = entity<realworld::User>(
+		predicate: (u) => u.username == authorUsername,
+	)
 	articleById = entity<Article>(predicate: (a) => a.id == targetId)
 	commentById = entity<Comment>(predicate: (c) => c.id == targetId)
 	target = match {
@@ -39,10 +41,10 @@ PublishComment = transaction(
 		target == None then ErrTargetNotFound{}
 
 		// Ensure users cant publish posts on behalf of other users
-		!isOwner(owner: author as User) then ErrUnauth{}
+		!isOwner(owner: author as realworld::User) then ErrUnauth{}
 
 		else {
-			author = author as User
+			author = author as realworld::User
 			target = target as Article or Comment
 
 			newComment = Article {
@@ -54,7 +56,7 @@ PublishComment = transaction(
 				comments:  [],
 			}
 
-			updatedAuthorProfile = User{
+			updatedAuthorProfile = realworld::User{
 				publishedComments: std::setInsert(
 					author.publishedComments,
 					newComment,

@@ -8,7 +8,7 @@ use {
 
 Comment = entity {
 	id        uuid::UuidV4
-	author    User
+	author    realworld::User
 	# target is nil if it was deleted
 	target    ?(Article or Comment)
 	createdAt time::Time

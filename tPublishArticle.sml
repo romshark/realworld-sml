@@ -24,17 +24,19 @@ PublishArticle = transaction(
 	ErrUnauth or
 	ErrUserNotFound
 ) => {
-	author = entity<User>(predicate: (u) => u.username == authorUsername)
+	author = entity<realworld::User>(
+		predicate: (u) => u.username == authorUsername,
+	)
 
 	& = match {
 		// Ensure the author exists
 		author == None then ErrUserNotFound{}
 
 		// Ensure users cant publish posts on behalf of other users
-		!isOwner(owner: author as User) then ErrUnauth{}
+		!isOwner(owner: author as realworld::User) then ErrUnauth{}
 
 		else {
-			author = author as User
+			author = author as realworld::User
 
 			newArticle = Article {
 				id:          uuid::v4(),
@@ -47,7 +49,7 @@ PublishArticle = transaction(
 				comments:    [],
 			}
 
-			updatedAuthorProfile = User{
+			updatedAuthorProfile = realworld::User{
 				publishedArticles: std::setInsert(
 					author.publishedArticles,
 					newArticle,

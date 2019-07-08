@@ -12,18 +12,18 @@ UpdateUser = transaction(
 	# username identifies the user to be updated
 	username Username,
 	
-	# newUsername doesn't change User.email when not given
+	# newUsername doesn't change realworld::User.email when not given
 	newUsername ?Username,
 
-	# newEmail doesn't change User.email when not given
+	# newEmail doesn't change realworld::User.email when not given
 	newEmail ?EmailAddress,
 
-	# newBio resets User.bio to unset when not given,
-	# use NoChange to leave User.bio unchanged
+	# newBio resets realworld::User.bio to unset when not given,
+	# use NoChange to leave realworld::User.bio unchanged
 	newBio ?(Text or NoChange),
 
-	# newImage resets User.image to unset when not given,
-	# use NoChange to leave User.image unchanged
+	# newImage resets realworld::User.image to unset when not given,
+	# use NoChange to leave realworld::User.image unchanged
 	newImage ?(url::Url or NoChange),
 ) -> (
 	std::Transaction<UserResolver> or
@@ -32,18 +32,20 @@ UpdateUser = transaction(
 	ErrUsernameReserved or
 	ErrEmailReserved
 ) => {
-	user = entity<User>(predicate: (u) => u.username == username)
-	userByNewUsername = entity<User>(
+	user = entity<realworld::User>(predicate: (u) => u.username == username)
+	userByNewUsername = entity<realworld::User>(
 		predicate: (u) => u.username == newUsername,
 	)
-	userByNewEmail = entity<User>(predicate: (u) => u.email == newEmail)
+	userByNewEmail = entity<realworld::User>(
+		predicate: (u) => u.email == newEmail,
+	)
 
 	& = match {
 		// Ensure the profile exists
 		user == None then ErrUserNotFound{}
 
 		// Ensure only the owner is allowed to update a profile
-		!isOwner(owner: user as User) then ErrUnauth{}
+		!isOwner(owner: user as realworld::User) then ErrUnauth{}
 
 		// Ensure username uniqueness
 		userByNewUsername != None then ErrUsernameReserved{}
@@ -52,9 +54,9 @@ UpdateUser = transaction(
 		userByNewEmail != None then ErrEmailReserved{}
 
 		else {
-			user = user as User
+			user = user as realworld::User
 
-			updatedProfile = User{
+			updatedProfile = realworld::User{
 				username: newUsername as v {
 					Username then v
 					else user.username

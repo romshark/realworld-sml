@@ -6,7 +6,7 @@ use {
 }
 
 UserResolver = resolver {
-	user User
+	user realworld::User
 
 	# email resolves the user's email address
 	email (EmailAddress or ErrUnauth) => authOwner(this.user, this.user.email)

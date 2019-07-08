@@ -17,8 +17,12 @@ UnfollowUser = transaction(
 	ErrUserNotFound or
 	ErrFolloweeNotFound
 ) => {
-	follower = entity<User>(predicate: (u) => u.username == followerUsername)
-	followee = entity<User>(predicate: (u) => u.username == followeeUsername)
+	follower = entity<realworld::User>(
+		predicate: (u) => u.username == followerUsername,
+	)
+	followee = entity<realworld::User>(
+		predicate: (u) => u.username == followeeUsername,
+	)
 
 	& = match {
 		// Ensure users cannot unfollow on behalf of other users
@@ -31,10 +35,10 @@ UnfollowUser = transaction(
 		followee == None then ErrFolloweeNotFound{}
 
 		else {
-			follower = follower as User
-			followee = followee as User
+			follower = follower as realworld::User
+			followee = followee as realworld::User
 
-			updatedFollowerProfile = User{
+			updatedFollowerProfile = realworld::User{
 				following: std::setRemove(follower.following, followee),
 				..follower
 			}
@@ -45,7 +49,7 @@ UnfollowUser = transaction(
 					std::mutate(follower, (u) => updatedFollowerProfile),
 
 					// Update the followee profile
-					std::mutate(followee, (u) => User{
+					std::mutate(followee, (u) => realworld::User{
 						followers: std::setRemove(followee.followers, follower),
 						..followee
 					}),
