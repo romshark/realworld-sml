@@ -45,10 +45,10 @@ Register = transaction(
 		}
 
 		// Ensure email uniqueness
-		userByEmail != _ then ErrEmailReserved{}
+		userByEmail != None then ErrEmailReserved{}
 
 		// Ensure username uniqueness
-		userByUsername != _ then ErrUsernameReserved{}
+		userByUsername != None then ErrUsernameReserved{}
 
 		else std::Transaction<UserResolver>{
 			effects: [

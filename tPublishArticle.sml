@@ -28,7 +28,7 @@ PublishArticle = transaction(
 
 	& = match {
 		// Ensure the author exists
-		author == _ then ErrUserNotFound{}
+		author == None then ErrUserNotFound{}
 
 		// Ensure users cant publish posts on behalf of other users
 		!isOwner(owner: author as User) then ErrUnauth{}

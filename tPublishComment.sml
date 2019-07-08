@@ -33,10 +33,10 @@ PublishComment = transaction(
 
 	& = match {
 		// Ensure the author exists
-		author == _ then ErrUserNotFound{}
+		author == None then ErrUserNotFound{}
 
 		// Ensure the target exists
-		target == _ then ErrTargetNotFound{}
+		target == None then ErrTargetNotFound{}
 
 		// Ensure users cant publish posts on behalf of other users
 		!isOwner(owner: author as User) then ErrUnauth{}

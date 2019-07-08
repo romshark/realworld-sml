@@ -25,10 +25,10 @@ UnfollowUser = transaction(
 		!isOwner(owner: follower) then ErrUnauth{}
 
 		// Ensure the follower exists
-		follower == _ then ErrUserNotFound{}
+		follower == None then ErrUserNotFound{}
 
 		// Ensure the followee exists
-		followee == _ then ErrFolloweeNotFound{}
+		followee == None then ErrFolloweeNotFound{}
 
 		else {
 			follower = follower as User

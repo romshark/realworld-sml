@@ -10,7 +10,7 @@ use {
 DeleteArticle = transaction(
 	articleId uuid::UuidV4,
 ) -> (
-	std::Transaction<_> or
+	std::Transaction<None> or
 	ErrUnauth or
 	ErrArticleNotFound
 ) => {
@@ -18,12 +18,12 @@ DeleteArticle = transaction(
 
 	& = match {
 		// Ensure the article exists
-		article == _ then ErrArticleNotFound{}
+		article == None then ErrArticleNotFound{}
 
 		// Ensure users can only delete their own articles
 		!isOwner(owner: (article as Article).author) then ErrUnauth{}
 
-		else std::Transaction<_>{
+		else std::Transaction<None>{
 			effects: [
 				// Delete the article entity
 				// this will automatically delete any references to it

@@ -13,7 +13,7 @@ Authenticate = transaction(
 
 	& = match {
 		// Ensure the user exists
-		user == _ then ErrWrongCredentials{}
+		user == None then ErrWrongCredentials{}
 
 		// Ensure the password is correct
 		!passwordEqual(password, (user as User).passwordHash) then

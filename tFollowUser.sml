@@ -29,10 +29,10 @@ FollowUser = transaction(
 
 	& = match {
 		// Ensure the follower exists
-		follower == _ then ErrUserNotFound{}
+		follower == None then ErrUserNotFound{}
 
 		// Ensure the followee exists
-		followee == _ then ErrFolloweeNotFound{}
+		followee == None then ErrFolloweeNotFound{}
 
 		// Ensure the client is the follower
 		!isOwner(owner: follower as User) then ErrUnauth{}

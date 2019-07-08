@@ -62,7 +62,7 @@ GraphRoot = resolver {
 
 		& = {
 			// Ensure the user exists
-			user == _ then ErrUserNotFound{}
+			user == None then ErrUserNotFound{}
 
 			// Ensure the client is the user for which the feed for requested
 			!isOwner(owner: user as User) then ErrUnauth{}

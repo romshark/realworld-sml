@@ -24,7 +24,7 @@ UpdateArticle = transaction(
 		!isOwner(owner: article.author) then ErrUnauth{}
 
 		// Ensure the article exists
-		article == _ then ErrArticleNotFound{}
+		article == None then ErrArticleNotFound{}
 
 		else {
 			article = article as Article

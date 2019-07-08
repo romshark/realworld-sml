@@ -40,16 +40,16 @@ UpdateUser = transaction(
 
 	& = match {
 		// Ensure the profile exists
-		user == _ then ErrUserNotFound{}
+		user == None then ErrUserNotFound{}
 
 		// Ensure only the owner is allowed to update a profile
 		!isOwner(owner: user as User) then ErrUnauth{}
 
 		// Ensure username uniqueness
-		userByNewUsername != _ then ErrUsernameReserved{}
+		userByNewUsername != None then ErrUsernameReserved{}
 
 		// Ensure email uniqueness
-		userByNewEmail != _ then ErrEmailReserved{}
+		userByNewEmail != None then ErrEmailReserved{}
 
 		else {
 			user = user as User
@@ -66,12 +66,12 @@ UpdateUser = transaction(
 				bio: newBio as v {
 					NoChange then user.bio
 					Text then v
-					else _
+					else None
 				},
 				image: newImage as v {
 					NoChange then user.image
 					url::Url then v
-					else _
+					else None
 				},
 				..user
 			}

@@ -10,7 +10,7 @@ use {
 DeleteComment = transaction(
 	commentId uuid::UuidV4,
 ) -> (
-	std::Transaction<_> or
+	std::Transaction<None> or
 	ErrUnauth or
 	ErrCommentNotFound
 ) => {
@@ -18,12 +18,12 @@ DeleteComment = transaction(
 
 	& = match {
 		// Ensure the comment exists
-		comment == _ then ErrCommentNotFound{}
+		comment == None then ErrCommentNotFound{}
 
 		// Ensure users can only delete their own comments
 		!isOwner(owner: (comment as Comment).author) then ErrUnauth{}
 
-		else std::Transaction<_>{
+		else std::Transaction<None>{
 			effects: [
 				// Delete the comment entity
 				// this will automatically delete any references to it
