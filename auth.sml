@@ -7,6 +7,7 @@ isOwner = (owner User) -> Bool => client() as u {
 		id(u) == id(owner) then true
 		else false
 	}
+	else false
 }
 
 # authOwner equals data if the current client is the owner,
