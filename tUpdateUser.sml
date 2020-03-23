@@ -18,7 +18,7 @@ tUpdateUser = (
 
 	# newBio resets realworld::User.bio to unset when not given,
 	# use NoChange to leave realworld::User.bio unchanged
-	newBio ?(Text or NoChange),
+	newBio ?(String or NoChange),
 
 	# newImage resets realworld::User.image to unset when not given,
 	# use NoChange to leave realworld::User.image unchanged
@@ -65,7 +65,7 @@ tUpdateUser = (
 				},
 				bio: newBio as v {
 					NoChange then user.bio
-					Text then v
+					String then v
 					else Nil
 				},
 				image: newImage as v {

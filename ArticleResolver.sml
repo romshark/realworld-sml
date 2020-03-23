@@ -14,7 +14,7 @@ ArticleResolver = resolver {
 	title ArticleTitle => this.article.title
 
 	# description resolves the article's description
-	description ArticleDescription Text => this.article.description
+	description ArticleDescription String => this.article.description
 
 	# body resolves the article contents
 	body ArticleBody => this.article.body

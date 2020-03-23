@@ -6,7 +6,7 @@ fragment realworld {
 realworld::User = entity {
 	email             EmailAddress
 	username          Username
-	bio               ?Text
+	bio               ?String
 	image             ?url::Url
 	passwordHash      PasswordHash
 	following         Set<realworld::User>

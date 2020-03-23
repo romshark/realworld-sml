@@ -6,7 +6,7 @@ fragment realworld {
 
 Article = entity {
 	id          uuid::UuidV4
-	slug        Text
+	slug        String
 	title       ArticleTitle
 	description ArticleDescription
 	body        ArticleBody

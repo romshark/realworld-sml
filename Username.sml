@@ -2,7 +2,7 @@ fragment realworld {
 	"std" 1.0
 }
 
-Username = Text
+Username = String
 
 new Username (v) => match {
 	len(v) < 3 then error("username too short")

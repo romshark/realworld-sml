@@ -2,7 +2,7 @@ fragment realworld {
 	"std" 1.0
 }
 
-ArticleDescription = Text
+ArticleDescription = String
 
 new ArticleDescription (v) => match {
 	len(v) < 2 then error("article description too short")

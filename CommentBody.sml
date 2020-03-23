@@ -2,7 +2,7 @@ fragment realworld {
 	"std" 1.0
 }
 
-CommentBody = Text
+CommentBody = String
 
 new CommentBody (v) => match {
 	len(v) < 1 then error("comment body too short")

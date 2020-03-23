@@ -3,7 +3,7 @@ fragment realworld {
 	"std/regex" 1.0
 }
 
-EmailAddress = Text
+EmailAddress = String
 
 new EmailAddress (v) => match {
 	len(v) < 5 then error("email address too short")

@@ -2,7 +2,7 @@ fragment realworld {
 	"std" 1.0
 }
 
-ArticleBody = Text
+ArticleBody = String
 
 new ArticleBody (v) => match {
 	len(v) < 1 then error("article body too short")

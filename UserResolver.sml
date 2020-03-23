@@ -13,7 +13,7 @@ UserResolver = resolver {
 	username Username => this.user.username
 
 	# bio resolves the user's biography if any
-	bio ?Text => this.user.bio
+	bio ?String => this.user.bio
 
 	# image resolves the user's avatar image url
 	image ?url::Url => this.user.image

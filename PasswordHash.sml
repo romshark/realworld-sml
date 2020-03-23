@@ -9,7 +9,7 @@ PasswordHash = struct {
 	hash Array<Byte>
 }
 
-newPasswordHash = (password Text) -> PasswordHash => {
+newPasswordHash = (password String) -> PasswordHash => {
 	salt = rand::bytes(8)
 	& = PasswordHash{
 		salt: salt,
@@ -17,7 +17,7 @@ newPasswordHash = (password Text) -> PasswordHash => {
 	}
 }
 
-passwordEqual = (password Text, hash PasswordHash) -> Bool => {
+passwordEqual = (password String, hash PasswordHash) -> Bool => {
 	generated = scrypt::key(password, hash.salt, 32768, 8, 1, 32)
 	& = match {
 		generated == hash.hash then true
