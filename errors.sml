@@ -1,12 +1,12 @@
 fragment realworld
 
-ErrUnauth = struct{}
-ErrWrongCredentials = struct{}
-ErrEmailReserved = struct{}
-ErrUsernameReserved = struct{}
-ErrFolloweeNotFound = struct{}
-ErrFolloweeInvalid = struct{}
-ErrArticleNotFound = struct{}
-ErrCommentNotFound = struct{}
-ErrTargetNotFound = struct{}
-ErrUserNotFound = struct{}
+ErrUnauth = Nil
+ErrWrongCredentials = Nil
+ErrEmailReserved = Nil
+ErrUsernameReserved = Nil
+ErrFolloweeNotFound = Nil
+ErrFolloweeInvalid = Nil
+ErrArticleNotFound = Nil
+ErrCommentNotFound = Nil
+ErrTargetNotFound = Nil
+ErrUserNotFound = Nil

@@ -14,10 +14,10 @@ tDeleteComment = (commentId uuid::UuidV4) -> (
 
 	& = match {
 		// Ensure the comment exists
-		comment == Nil then ErrCommentNotFound{}
+		comment == Nil then ErrCommentNotFound
 
 		// Ensure users can only delete their own comments
-		!isOwner(owner: (Comment from comment).author) then ErrUnauth{}
+		!isOwner(owner: (Comment from comment).author) then ErrUnauth
 
 		else std::Transaction<Nil>{
 			effects: [

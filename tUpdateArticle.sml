@@ -19,10 +19,10 @@ tUpdateArticle = (
 
 	& = match {
 		// Ensure only the owner is allowed to update an article
-		!isOwner(owner: article.author) then ErrUnauth{}
+		!isOwner(owner: article.author) then ErrUnauth
 
 		// Ensure the article exists
-		article == Nil then ErrArticleNotFound{}
+		article == Nil then ErrArticleNotFound
 
 		else {
 			article = Article from article

@@ -31,17 +31,17 @@ tFollowUser = (
 
 	& = match {
 		// Ensure the follower exists
-		follower == Nil then ErrUserNotFound{}
+		follower == Nil then ErrUserNotFound
 
 		// Ensure the followee exists
-		followee == Nil then ErrFolloweeNotFound{}
+		followee == Nil then ErrFolloweeNotFound
 
 		// Ensure the client is the follower
-		!isOwner(owner: realworld::User from follower) then ErrUnauth{}
+		!isOwner(owner: realworld::User from follower) then ErrUnauth
 
 		// Ensure the user doesnt follow himself
 		id(realworld::User from follower) == id(realworld::User from followee) then
-			ErrFolloweeInvalid{}
+			ErrFolloweeInvalid
 
 		else {
 			follower = realworld::User from follower

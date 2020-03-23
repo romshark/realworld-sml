@@ -40,16 +40,16 @@ tUpdateUser = (
 
 	& = match {
 		// Ensure the profile exists
-		user == Nil then ErrUserNotFound{}
+		user == Nil then ErrUserNotFound
 
 		// Ensure only the owner is allowed to update a profile
-		!isOwner(owner: realworld::User from user) then ErrUnauth{}
+		!isOwner(owner: realworld::User from user) then ErrUnauth
 
 		// Ensure username uniqueness
-		userByNewUsername != Nil then ErrUsernameReserved{}
+		userByNewUsername != Nil then ErrUsernameReserved
 
 		// Ensure email uniqueness
-		userByNewEmail != Nil then ErrEmailReserved{}
+		userByNewEmail != Nil then ErrEmailReserved
 
 		else {
 			user = realworld::User from user

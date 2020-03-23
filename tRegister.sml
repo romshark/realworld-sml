@@ -47,10 +47,10 @@ tRegister = (
 		}
 
 		// Ensure email uniqueness
-		userByEmail != Nil then ErrEmailReserved{}
+		userByEmail != Nil then ErrEmailReserved
 
 		// Ensure username uniqueness
-		userByUsername != Nil then ErrUsernameReserved{}
+		userByUsername != Nil then ErrUsernameReserved
 
 		else std::Transaction<UserResolver>{
 			effects: [

@@ -62,10 +62,10 @@ GraphRoot = resolver {
 
 		& = {
 			// Ensure the user exists
-			user == None then ErrUserNotFound{}
+			user == Nil then ErrUserNotFound
 
 			// Ensure the client is the user for which the feed for requested
-			!isOwner(owner: realworld::User from user) then ErrUnauth{}
+			!isOwner(owner: realworld::User from user) then ErrUnauth
 
 			else {
 				feedArticles = map(

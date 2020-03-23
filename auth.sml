@@ -14,5 +14,5 @@ isOwner = (owner realworld::User) -> Bool => client() as u {
 # otherwise equals ErrUnauth
 authOwner = <D>(owner realworld::User, data D) -> (D or ErrUnauth) => match {
 	isOwner(owner) then data
-	else ErrUnauth{}
+	else ErrUnauth
 }

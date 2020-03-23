@@ -24,13 +24,13 @@ tUnfollowUser = (
 
 	& = match {
 		// Ensure users cannot unfollow on behalf of other users
-		!isOwner(owner: follower) then ErrUnauth{}
+		!isOwner(owner: follower) then ErrUnauth
 
 		// Ensure the follower exists
-		follower == Nil then ErrUserNotFound{}
+		follower == Nil then ErrUserNotFound
 
 		// Ensure the followee exists
-		followee == Nil then ErrFolloweeNotFound{}
+		followee == Nil then ErrFolloweeNotFound
 
 		else {
 			follower = realworld::User from follower
