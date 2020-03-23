@@ -9,8 +9,8 @@ ErrPasswordInvalid = error{
 	maxLen Uint32
 }
 
-# Register is analogous to "POST /api/users"
-Register = transaction(
+# tRegister is analogous to "POST /api/users"
+tRegister = (
 	username Username,
 	email EmailAddress,
 	password Text,

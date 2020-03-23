@@ -10,8 +10,8 @@ EvCommentPublished = event {
 	comment CommentResolver => CommentResolver{comment: this.comment}
 }
 
-# PublishComment is analogous to "POST /api/articles/:slug/comments"
-PublishComment = transaction(
+# tPublishComment is analogous to "POST /api/articles/:slug/comments"
+tPublishComment = (
 	targetId uuid::UuidV4,
 	authorUsername Username,
 	body CommentBody,

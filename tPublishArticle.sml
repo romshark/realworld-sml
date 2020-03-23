@@ -10,8 +10,8 @@ EvArticlePublished = event {
 	article ArticleResolver => ArticleResolver{article: this.article}
 }
 
-# PublishArticle is analogous to "POST /api/profiles/:username/follow"
-PublishArticle = transaction(
+# tPublishArticle is analogous to "POST /api/profiles/:username/follow"
+tPublishArticle = (
 	authorUsername Username,
 	title ArticleTitle,
 	description ArticleDescription,

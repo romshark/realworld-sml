@@ -4,8 +4,8 @@ fragment realworld {
 	"std/uuid" 1.0
 }
 
-# UpdateArticle is analogous to "PUT /api/articles/:slug"
-UpdateArticle = transaction(
+# tUpdateArticle is analogous to "PUT /api/articles/:slug"
+tUpdateArticle = (
 	articleId uuid::UuidV4,
 	title ?ArticleTitle,
 	description ?ArticleDescription,

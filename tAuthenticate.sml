@@ -2,8 +2,8 @@ fragment realworld {
 	"std" 1.0
 }
 
-# Authenticate is analogous to "POST /api/users/login"
-Authenticate = transaction(
+# tAuthenticate is analogous to "POST /api/users/login"
+tAuthenticate = (
 	email    EmailAddress,
 	password Text,
 ) -> (std::Transaction<UserResolver> or ErrWrongCredentials) => {

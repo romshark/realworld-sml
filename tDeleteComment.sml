@@ -4,10 +4,8 @@ fragment realworld {
 	"std/uuid" 1.0
 }
 
-# DeleteComment is analogous to "DELETE /api/articles/:slug/comments/:id"
-DeleteComment = transaction(
-	commentId uuid::UuidV4,
-) -> (
+# tDeleteComment is analogous to "DELETE /api/articles/:slug/comments/:id"
+tDeleteComment = (commentId uuid::UuidV4) -> (
 	std::Transaction<None> or
 	ErrUnauth or
 	ErrCommentNotFound

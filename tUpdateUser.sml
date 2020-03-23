@@ -5,8 +5,8 @@ fragment realworld {
 
 NoChange = struct{}
 
-# UpdateUser is analogous to "PUT /api/user"
-UpdateUser = transaction(
+# tUpdateUser is analogous to "PUT /api/user"
+tUpdateUser = (
 	# username identifies the user to be updated
 	username Username,
 	

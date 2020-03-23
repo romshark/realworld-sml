@@ -4,10 +4,8 @@ fragment realworld {
 	"std/uuid" 1.0
 }
 
-# DeleteArticle is analogous to "DELETE /api/articles/:slug"
-DeleteArticle = transaction(
-	articleId uuid::UuidV4,
-) -> (
+# tDeleteArticle is analogous to "DELETE /api/articles/:slug"
+tDeleteArticle = (articleId uuid::UuidV4) -> (
 	std::Transaction<None> or
 	ErrUnauth or
 	ErrArticleNotFound

@@ -8,8 +8,8 @@ EvFollowed = event {
 	newFollower UserResolver => UserResolver{user: this.follower}
 }
 
-# FollowUser is analogous to "POST /api/profiles/:username/follow"
-FollowUser = transaction(
+# tFollowUser is analogous to "POST /api/profiles/:username/follow"
+tFollowUser = (
 	# followerUsername identifies the user to create the subcription for
 	followerUsername Username,
 

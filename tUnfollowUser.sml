@@ -2,8 +2,8 @@ fragment realworld {
 	"std" 1.0
 }
 
-# UnfollowUser is analogous to "DELETE /api/profiles/:username/follow"
-UnfollowUser = transaction(
+# tUnfollowUser is analogous to "DELETE /api/profiles/:username/follow"
+tUnfollowUser = (
 	# followerUsername identifies the user to cancel the subcription for
 	followerUsername Username,
 

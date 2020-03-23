@@ -80,4 +80,18 @@ GraphRoot = resolver {
 			}
 		}
 	}
+
+	tRegister
+	tAuthenticate
+
+	tFollowUser
+	tUnfollowUser
+	tUpdateUser
+
+	tPublishArticle
+	tDeleteArticle
+	tUpdateArticle
+
+	tPublishComment
+	tDeleteComment
 }
