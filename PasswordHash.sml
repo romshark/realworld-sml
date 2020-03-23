@@ -1,6 +1,4 @@
-fragment realworld
-
-use {
+fragment realworld {
 	"std" 1.0
 	"std/crypto/rand" 1.0
 	"std/crypto/scrypt" 1.0

@@ -1,6 +1,4 @@
-fragment realworld
-
-use {
+fragment realworld {
 	"std" 1.0
 	"std/time" 1.0
 	"std/uuid" 1.0

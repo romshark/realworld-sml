@@ -1,6 +1,4 @@
-fragment realworld
-
-use {
+fragment realworld {
 	"std" 1.0
 	"url/url" 1.0
 	"std/mail" 1.0
