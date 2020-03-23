@@ -27,10 +27,10 @@ tUnfollowUser = (
 		!isOwner(owner: follower) then ErrUnauth{}
 
 		// Ensure the follower exists
-		follower == None then ErrUserNotFound{}
+		follower == Nil then ErrUserNotFound{}
 
 		// Ensure the followee exists
-		followee == None then ErrFolloweeNotFound{}
+		followee == Nil then ErrFolloweeNotFound{}
 
 		else {
 			follower = realworld::User from follower

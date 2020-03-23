@@ -11,7 +11,7 @@ tAuthenticate = (
 
 	& = match {
 		// Ensure the user exists
-		user == None then ErrWrongCredentials{}
+		user == Nil then ErrWrongCredentials{}
 
 		// Ensure the password is correct
 		!passwordEqual(password, (realworld::User from user).passwordHash) then

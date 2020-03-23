@@ -28,7 +28,7 @@ tPublishArticle = (
 
 	& = match {
 		// Ensure the author exists
-		author == None then ErrUserNotFound{}
+		author == Nil then ErrUserNotFound{}
 
 		// Ensure users cant publish posts on behalf of other users
 		!isOwner(owner: realworld::User from author) then ErrUnauth{}

@@ -33,10 +33,10 @@ tPublishComment = (
 
 	& = match {
 		// Ensure the author exists
-		author == None then ErrUserNotFound{}
+		author == Nil then ErrUserNotFound{}
 
 		// Ensure the target exists
-		target == None then ErrTargetNotFound{}
+		target == Nil then ErrTargetNotFound{}
 
 		// Ensure users cant publish posts on behalf of other users
 		!isOwner(owner: realworld::User from author) then ErrUnauth{}

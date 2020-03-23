@@ -22,7 +22,7 @@ tUpdateArticle = (
 		!isOwner(owner: article.author) then ErrUnauth{}
 
 		// Ensure the article exists
-		article == None then ErrArticleNotFound{}
+		article == Nil then ErrArticleNotFound{}
 
 		else {
 			article = Article from article

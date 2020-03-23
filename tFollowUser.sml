@@ -31,10 +31,10 @@ tFollowUser = (
 
 	& = match {
 		// Ensure the follower exists
-		follower == None then ErrUserNotFound{}
+		follower == Nil then ErrUserNotFound{}
 
 		// Ensure the followee exists
-		followee == None then ErrFolloweeNotFound{}
+		followee == Nil then ErrFolloweeNotFound{}
 
 		// Ensure the client is the follower
 		!isOwner(owner: realworld::User from follower) then ErrUnauth{}

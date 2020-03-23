@@ -40,16 +40,16 @@ tUpdateUser = (
 
 	& = match {
 		// Ensure the profile exists
-		user == None then ErrUserNotFound{}
+		user == Nil then ErrUserNotFound{}
 
 		// Ensure only the owner is allowed to update a profile
 		!isOwner(owner: realworld::User from user) then ErrUnauth{}
 
 		// Ensure username uniqueness
-		userByNewUsername != None then ErrUsernameReserved{}
+		userByNewUsername != Nil then ErrUsernameReserved{}
 
 		// Ensure email uniqueness
-		userByNewEmail != None then ErrEmailReserved{}
+		userByNewEmail != Nil then ErrEmailReserved{}
 
 		else {
 			user = realworld::User from user
@@ -66,12 +66,12 @@ tUpdateUser = (
 				bio: newBio as v {
 					NoChange then user.bio
 					Text then v
-					else None
+					else Nil
 				},
 				image: newImage as v {
 					NoChange then user.image
 					url::Url then v
-					else None
+					else Nil
 				},
 				..user
 			}
