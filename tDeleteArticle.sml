@@ -17,13 +17,13 @@ tDeleteArticle = (articleId uuid::UuidV4) -> (
 		article == None then ErrArticleNotFound{}
 
 		// Ensure users can only delete their own articles
-		!isOwner(owner: (article as Article).author) then ErrUnauth{}
+		!isOwner(owner: (Article from article).author) then ErrUnauth{}
 
 		else std::Transaction<None>{
 			effects: [
 				// Delete the article entity
 				// this will automatically delete any references to it
-				std::delete(article as Article),
+				std::delete(Article from article),
 			],
 		}
 	}

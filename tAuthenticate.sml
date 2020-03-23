@@ -14,11 +14,11 @@ tAuthenticate = (
 		user == None then ErrWrongCredentials{}
 
 		// Ensure the password is correct
-		!passwordEqual(password, (user as realworld::User).passwordHash) then
+		!passwordEqual(password, (realworld::User from user).passwordHash) then
 			ErrWrongCredentials{}
 
 		else {
-			u = user as realworld::User
+			u = realworld::User from user
 			& = std::Transaction<UserResolver>{
 				effects: [std::auth(std::client(), u)],
 				data:    UserResolver{user: u},

@@ -37,15 +37,15 @@ tFollowUser = (
 		followee == None then ErrFolloweeNotFound{}
 
 		// Ensure the client is the follower
-		!isOwner(owner: follower as realworld::User) then ErrUnauth{}
+		!isOwner(owner: realworld::User from follower) then ErrUnauth{}
 
 		// Ensure the user doesnt follow himself
-		id(follower as realworld::User) == id(followee as realworld::User) then
+		id(realworld::User from follower) == id(realworld::User from followee) then
 			ErrFolloweeInvalid{}
 
 		else {
-			follower = follower as realworld::User
-			followee = follower as realworld::User
+			follower = realworld::User from follower
+			followee = realworld::User from followee
 
 			updatedFollowerProfile = realworld::User{
 				following: std::setInsert(follower.following, followee),

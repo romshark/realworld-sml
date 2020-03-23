@@ -33,8 +33,8 @@ tUnfollowUser = (
 		followee == None then ErrFolloweeNotFound{}
 
 		else {
-			follower = follower as realworld::User
-			followee = followee as realworld::User
+			follower = realworld::User from follower
+			followee = realworld::User from followee
 
 			updatedFollowerProfile = realworld::User{
 				following: std::setRemove(follower.following, followee),

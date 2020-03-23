@@ -8,5 +8,5 @@ accountCreationEmail = (username Username) -> Text => fmt::text(
 	`Welcome to RealWorld, %s!<br>
 	you've received this email because a new user account
 	has been registered for this email address`,
-	username as Text,
+	Text from username,
 )

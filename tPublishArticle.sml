@@ -31,10 +31,10 @@ tPublishArticle = (
 		author == None then ErrUserNotFound{}
 
 		// Ensure users cant publish posts on behalf of other users
-		!isOwner(owner: author as realworld::User) then ErrUnauth{}
+		!isOwner(owner: realworld::User from author) then ErrUnauth{}
 
 		else {
-			author = author as realworld::User
+			author = realworld::User from author
 
 			newArticle = Article {
 				id:          uuid::v4(),

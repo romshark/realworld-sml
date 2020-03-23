@@ -43,7 +43,7 @@ tUpdateUser = (
 		user == None then ErrUserNotFound{}
 
 		// Ensure only the owner is allowed to update a profile
-		!isOwner(owner: user as realworld::User) then ErrUnauth{}
+		!isOwner(owner: realworld::User from user) then ErrUnauth{}
 
 		// Ensure username uniqueness
 		userByNewUsername != None then ErrUsernameReserved{}
@@ -52,7 +52,7 @@ tUpdateUser = (
 		userByNewEmail != None then ErrEmailReserved{}
 
 		else {
-			user = user as realworld::User
+			user = realworld::User from user
 
 			updatedProfile = realworld::User{
 				username: newUsername as v {

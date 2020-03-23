@@ -25,7 +25,7 @@ tUpdateArticle = (
 		article == None then ErrArticleNotFound{}
 
 		else {
-			article = article as Article
+			article = Article from article
 
 			updatedArticle = Article {
 				title: title as v {

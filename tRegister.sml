@@ -59,7 +59,7 @@ tRegister = (
 
 				// Send account creation email
 				mail::send(
-					email as Text,
+					Text from email,
 					accountCreationEmail(username, email),
 				),
 			],

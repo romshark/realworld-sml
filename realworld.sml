@@ -65,11 +65,11 @@ GraphRoot = resolver {
 			user == None then ErrUserNotFound{}
 
 			// Ensure the client is the user for which the feed for requested
-			!isOwner(owner: user as realworld::User) then ErrUnauth{}
+			!isOwner(owner: realworld::User from user) then ErrUnauth{}
 
 			else {
 				feedArticles = map(
-					(user as realworld::User).following,
+					(realworld::User from user).following,
 					(followee) => followee.publishedArticles,
 				)
 				sorted = std::sortBy(feedArticles, std::Order{

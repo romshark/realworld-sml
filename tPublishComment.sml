@@ -27,8 +27,8 @@ tPublishComment = (
 	articleById = entity<Article>(predicate: (a) => a.id == targetId)
 	commentById = entity<Comment>(predicate: (c) => c.id == targetId)
 	target = match {
-		articleById == Article then articleById as Article
-		commentById == Comment then commentById as Comment
+		articleById == Article then Article from articleById
+		commentById == Comment then Comment from commentById
 	}
 
 	& = match {
@@ -39,11 +39,11 @@ tPublishComment = (
 		target == None then ErrTargetNotFound{}
 
 		// Ensure users cant publish posts on behalf of other users
-		!isOwner(owner: author as realworld::User) then ErrUnauth{}
+		!isOwner(owner: realworld::User from author) then ErrUnauth{}
 
 		else {
-			author = author as realworld::User
-			target = target as Article or Comment
+			author = realworld::User from author
+			target = Article or Comment from target
 
 			newComment = Article {
 				id:        uuid::v4(),
