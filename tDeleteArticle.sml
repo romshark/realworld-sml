@@ -20,11 +20,11 @@ tDeleteArticle = (articleId uuid::UuidV4) -> (
 		!isOwner(owner: (Article from article).author) then ErrUnauth
 
 		else std::Transaction<Nil>{
-			effects: [
+			effects: {
 				// Delete the article entity
 				// this will automatically delete any references to it
 				std::delete(Article from article),
-			],
+			},
 		}
 	}
 }

@@ -44,7 +44,7 @@ tPublishArticle = (
 				tags:        tags,
 				createdAt:   time::now(),
 				author:      author,
-				comments:    [],
+				comments:    {},
 			}
 
 			updatedAuthorProfile = realworld::User{
@@ -55,8 +55,8 @@ tPublishArticle = (
 				..follower
 			}
 
-			& = std::Transaction<ArticleResolver>{
-				effects: [
+			& = std::Transaction{
+				effects: {
 					// Update the author profile
 					std::mutate(author, (u) => updatedAuthorProfile),
 
@@ -67,7 +67,7 @@ tPublishArticle = (
 					std::event(author.followers, EvArticlePublished{
 						article: newArticle,
 					}),
-				],
+				},
 				data: ArticleResolver{article: newArticle},
 			}
 		}

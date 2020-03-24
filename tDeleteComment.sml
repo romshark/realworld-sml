@@ -20,11 +20,11 @@ tDeleteComment = (commentId uuid::UuidV4) -> (
 		!isOwner(owner: (Comment from comment).author) then ErrUnauth
 
 		else std::Transaction<Nil>{
-			effects: [
+			effects: {
 				// Delete the comment entity
 				// this will automatically delete any references to it
 				std::delete(Comment from comment),
-			],
+			},
 		}
 	}
 }

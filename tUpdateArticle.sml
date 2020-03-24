@@ -43,11 +43,11 @@ tUpdateArticle = (
 				..article
 			}
 
-			& = std::Transaction<ArticleResolver>{
-				effects: [
+			& = std::Transaction{
+				effects: {
 					// Update the article
 					std::mutate(article, (u) => updatedArticle),
-				],
+				},
 				data: ArticleResolver{article: updatedArticle},
 			}
 		}

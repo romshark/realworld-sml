@@ -51,7 +51,7 @@ tPublishComment = (
 				target:    target,
 				body:      body,
 				createdAt: time::now(),
-				comments:  [],
+				comments:  {},
 			}
 
 			updatedAuthorProfile = realworld::User{
@@ -62,8 +62,8 @@ tPublishComment = (
 				..follower
 			}
 
-			& = std::Transaction<CommentResolver>{
-				effects: [
+			& = std::Transaction{
+				effects: {
 					// Update the author profile
 					std::mutate(author, (u) => updatedAuthorProfile),
 
@@ -72,15 +72,15 @@ tPublishComment = (
 
 					// Notify all the author about a new comment being published
 					std::event(
-						[target as t {
+						{target as t {
 							Article then t.author
 							Comment then t.author
-						}],
+						}},
 						EvCommentPublished{
 							comment: newComment,
 						},
 					),
-				],
+				},
 				data: CommentResolver{comment: newComment},
 			}
 		}

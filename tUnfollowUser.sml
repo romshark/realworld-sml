@@ -41,8 +41,8 @@ tUnfollowUser = (
 				..follower
 			}
 
-			& = std::Transaction<UserResolver>{
-				effects: [
+			& = std::Transaction{
+				effects: {
 					// Update the follower profile
 					std::mutate(follower, (u) => updatedFollowerProfile),
 
@@ -51,7 +51,7 @@ tUnfollowUser = (
 						followers: std::setRemove(followee.followers, follower),
 						..followee
 					}),
-				],
+				},
 				data: UserResolver{user: updatedFollowerProfile},
 			}
 		}

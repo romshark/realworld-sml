@@ -52,8 +52,8 @@ tFollowUser = (
 				..follower
 			}
 
-			& = std::Transaction<UserResolver>{
-				effects: [
+			& = std::Transaction{
+				effects: {
 					// Update the follower profile
 					std::mutate(follower, (u) => updatedFollowerProfile),
 
@@ -64,10 +64,10 @@ tFollowUser = (
 					}),
 
 					// Notify the followee about a new follower subscription
-					std::event([followee], EvFollowed{
+					std::event({followee}, EvFollowed{
 						newFollower: follower,
 					}),
-				],
+				},
 				data: UserResolver{user: updatedFollowerProfile},
 			}
 		}

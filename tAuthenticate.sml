@@ -19,8 +19,8 @@ tAuthenticate = (
 
 		else {
 			u = realworld::User from user
-			& = std::Transaction<UserResolver>{
-				effects: [std::auth(std::client(), u)],
+			& = std::Transaction{
+				effects: {std::auth(std::client(), u)},
 				data:    UserResolver{user: u},
 			}
 		}

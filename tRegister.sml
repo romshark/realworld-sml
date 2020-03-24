@@ -35,8 +35,8 @@ tRegister = (
 		bio:               bio,
 		image:             image,
 		passwordHash:      newPasswordHash(password),
-		publishedArticle:  [],
-		publishedComments: [],
+		publishedArticle:  {},
+		publishedComments: {},
 	}
 
 	& = match {
@@ -52,8 +52,8 @@ tRegister = (
 		// Ensure username uniqueness
 		userByUsername != Nil then ErrUsernameReserved
 
-		else std::Transaction<UserResolver>{
-			effects: [
+		else std::Transaction{
+			effects: {
 				// Create a new profile
 				std::new(newUser),
 
@@ -62,7 +62,7 @@ tRegister = (
 					Text from email,
 					accountCreationEmail(username, email),
 				),
-			],
+			},
 			data: UserResolver{user: newUser},
 		}
 	}

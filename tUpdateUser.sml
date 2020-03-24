@@ -76,11 +76,11 @@ tUpdateUser = (
 				..user
 			}
 
-			& = std::Transaction<UserResolver>{
-				effects: [
+			& = std::Transaction{
+				effects: {
 					// Update the profile
 					std::mutate(user, (u) => updatedProfile),
-				],
+				},
 				data: UserResolver{user: updatedProfile},
 			}
 		}
