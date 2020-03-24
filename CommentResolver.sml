@@ -6,7 +6,7 @@ fragment realworld {
 
 CommentResolver = resolver {
 	comment Comment
-
+} {
 	# id resolves the unique identifier of the comment
 	id uuid::UuidV4 => this.comment.id
 

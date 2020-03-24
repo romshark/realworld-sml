@@ -6,7 +6,7 @@ fragment realworld {
 
 ArticleResolver = resolver {
 	article Article
-
+} {
 	# id resolves the unique identifier of the article
 	id uuid::UuidV4 => this.article.id
 
