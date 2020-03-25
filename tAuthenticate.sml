@@ -2,11 +2,19 @@ fragment realworld {
 	"std" 1.0
 }
 
+AuthenticationResult = struct {
+	email    EmailAddress
+	token    String
+	username Username
+	bio      String
+	image    String
+}
+
 # tAuthenticate is analogous to "POST /api/users/login"
 tAuthenticate = (
 	email    EmailAddress,
 	password Text,
-) -> (std::Transaction<UserResolver> or ErrWrongCredentials) => {
+) -> (AuthenticationResult or ErrWrongCredentials) => {
 	user = entity<realworld::User>(predicate: (u) => u.email == email)
 
 	& = match {
@@ -19,9 +27,12 @@ tAuthenticate = (
 
 		else {
 			u = realworld::User from user
-			& = std::Transaction{
-				effects: {std::auth(std::client(), u)},
-				data:    UserResolver{user: u},
+			& = AuthenticationResult {
+				email:    email,
+				token:    newAccessToken(u),
+				username: u.username,
+				bio:      u.bio,
+				image:    u.image,
 			}
 		}
 	}
