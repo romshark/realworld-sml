@@ -6,7 +6,7 @@ fragment realworld {
 
 Comment = entity {
 	id        uuid::UuidV4
-	author    realworld::User
+	author    User
 	# target is nil if it was deleted
 	target    ?(Article or Comment)
 	createdAt time::Time

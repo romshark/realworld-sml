@@ -22,14 +22,14 @@ tRegister = (
 	ErrEmailReserved or
 	ErrUsernameReserved
 ) => {
-	userByEmail = entity<realworld::User>(
+	userByEmail = entity<User>(
 		predicate: (u) => u.email == email,
 	)
-	userByUsername = entity<realworld::User>(
+	userByUsername = entity<User>(
 		predicate: (u) => u.username == username,
 	)
 
-	newUser = realworld::User{
+	newUser = User{
 		email:             email,
 		username:          username,
 		bio:               bio,

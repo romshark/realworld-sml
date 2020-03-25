@@ -21,7 +21,7 @@ tPublishComment = (
 	ErrUserNotFound or
 	ErrTargetNotFound
 ) => {
-	author = entity<realworld::User>(
+	author = entity<User>(
 		predicate: (u) => u.username == authorUsername,
 	)
 	articleById = entity<Article>(predicate: (a) => a.id == targetId)
@@ -39,10 +39,10 @@ tPublishComment = (
 		target == Nil then ErrTargetNotFound
 
 		// Ensure users cant publish posts on behalf of other users
-		!isOwner(owner: realworld::User from author) then ErrUnauth
+		!isOwner(owner: User from author) then ErrUnauth
 
 		else {
-			author = realworld::User from author
+			author = User from author
 			target = Article or Comment from target
 
 			newComment = Article {
@@ -54,7 +54,7 @@ tPublishComment = (
 				comments:  {},
 			}
 
-			updatedAuthorProfile = realworld::User{
+			updatedAuthorProfile = User{
 				publishedComments: std::setInsert(
 					author.publishedComments,
 					newComment,

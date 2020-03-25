@@ -10,18 +10,18 @@ tUpdateUser = (
 	# username identifies the user to be updated
 	username Username,
 	
-	# newUsername doesn't change realworld::User.email when not given
+	# newUsername doesn't change User.email when not given
 	newUsername ?Username,
 
-	# newEmail doesn't change realworld::User.email when not given
+	# newEmail doesn't change User.email when not given
 	newEmail ?EmailAddress,
 
-	# newBio resets realworld::User.bio to unset when not given,
-	# use NoChange to leave realworld::User.bio unchanged
+	# newBio resets User.bio to unset when not given,
+	# use NoChange to leave User.bio unchanged
 	newBio ?(String or NoChange),
 
-	# newImage resets realworld::User.image to unset when not given,
-	# use NoChange to leave realworld::User.image unchanged
+	# newImage resets User.image to unset when not given,
+	# use NoChange to leave User.image unchanged
 	newImage ?(url::Url or NoChange),
 ) -> (
 	std::Transaction<UserResolver> or
@@ -30,11 +30,11 @@ tUpdateUser = (
 	ErrUsernameReserved or
 	ErrEmailReserved
 ) => {
-	user = entity<realworld::User>(predicate: (u) => u.username == username)
-	userByNewUsername = entity<realworld::User>(
+	user = entity<User>(predicate: (u) => u.username == username)
+	userByNewUsername = entity<User>(
 		predicate: (u) => u.username == newUsername,
 	)
-	userByNewEmail = entity<realworld::User>(
+	userByNewEmail = entity<User>(
 		predicate: (u) => u.email == newEmail,
 	)
 
@@ -43,7 +43,7 @@ tUpdateUser = (
 		user == Nil then ErrUserNotFound
 
 		// Ensure only the owner is allowed to update a profile
-		!isOwner(owner: realworld::User from user) then ErrUnauth
+		!isOwner(owner: User from user) then ErrUnauth
 
 		// Ensure username uniqueness
 		userByNewUsername != Nil then ErrUsernameReserved
@@ -52,9 +52,9 @@ tUpdateUser = (
 		userByNewEmail != Nil then ErrEmailReserved
 
 		else {
-			user = realworld::User from user
+			user = User from user
 
-			updatedProfile = realworld::User{
+			updatedProfile = User{
 				username: newUsername as v {
 					Username then v
 					else user.username

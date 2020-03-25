@@ -3,7 +3,7 @@ fragment realworld {
 }
 
 EvFollowed = event {
-	newFollower realworld::User
+	newFollower User
 
 	newFollower UserResolver => UserResolver{user: this.follower}
 }
@@ -22,10 +22,10 @@ tFollowUser = (
 	ErrFolloweeNotFound or
 	ErrFolloweeInvalid
 ) => {
-	follower = entity<realworld::User>(
+	follower = entity<User>(
 		predicate: (u) => u.username == followerUsername,
 	)
-	followee = entity<realworld::User>(
+	followee = entity<User>(
 		predicate: (u) => u.username == followeeUsername,
 	)
 
@@ -37,17 +37,17 @@ tFollowUser = (
 		followee == Nil then ErrFolloweeNotFound
 
 		// Ensure the client is the follower
-		!isOwner(owner: realworld::User from follower) then ErrUnauth
+		!isOwner(owner: User from follower) then ErrUnauth
 
 		// Ensure the user doesnt follow himself
-		id(realworld::User from follower) == id(realworld::User from followee) then
+		id(User from follower) == id(User from followee) then
 			ErrFolloweeInvalid
 
 		else {
-			follower = realworld::User from follower
-			followee = realworld::User from followee
+			follower = User from follower
+			followee = User from followee
 
-			updatedFollowerProfile = realworld::User{
+			updatedFollowerProfile = User{
 				following: std::setInsert(follower.following, followee),
 				..follower
 			}
@@ -58,7 +58,7 @@ tFollowUser = (
 					std::mutate(follower, (u) => updatedFollowerProfile),
 
 					// Update the followee profile
-					std::mutate(followee, (u) => realworld::User{
+					std::mutate(followee, (u) => User{
 						followers: std::setInsert(followee.followers, follower),
 						..followee
 					}),

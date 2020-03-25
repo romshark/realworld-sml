@@ -22,7 +22,7 @@ tPublishArticle = (
 	ErrUnauth or
 	ErrUserNotFound
 ) => {
-	author = entity<realworld::User>(
+	author = entity<User>(
 		predicate: (u) => u.username == authorUsername,
 	)
 
@@ -31,10 +31,10 @@ tPublishArticle = (
 		author == Nil then ErrUserNotFound
 
 		// Ensure users cant publish posts on behalf of other users
-		!isOwner(owner: realworld::User from author) then ErrUnauth
+		!isOwner(owner: User from author) then ErrUnauth
 
 		else {
-			author = realworld::User from author
+			author = User from author
 
 			newArticle = Article {
 				id:          uuid::v4(),
@@ -47,7 +47,7 @@ tPublishArticle = (
 				comments:    {},
 			}
 
-			updatedAuthorProfile = realworld::User{
+			updatedAuthorProfile = User{
 				publishedArticles: std::setInsert(
 					author.publishedArticles,
 					newArticle,

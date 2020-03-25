@@ -15,18 +15,18 @@ tAuthenticate = (
 	email    EmailAddress,
 	password Text,
 ) -> (AuthenticationResult or ErrWrongCredentials) => {
-	user = entity<realworld::User>(predicate: (u) => u.email == email)
+	user = entity<User>(predicate: (u) => u.email == email)
 
 	& = match {
 		// Ensure the user exists
 		user == Nil then ErrWrongCredentials
 
 		// Ensure the password is correct
-		!passwordEqual(password, (realworld::User from user).passwordHash) then
+		!passwordEqual(password, (User from user).passwordHash) then
 			ErrWrongCredentials
 
 		else {
-			u = realworld::User from user
+			u = User from user
 			& = AuthenticationResult {
 				email:    email,
 				token:    newAccessToken(u),

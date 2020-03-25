@@ -13,6 +13,6 @@ Article = entity {
 	tags        Set<Tag>
 	createdAt   time::Time
 	updatedAt   ?time::Time
-	author      realworld::User
+	author      User
 	comments    Array<Comment>
 }

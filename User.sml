@@ -13,8 +13,8 @@ User = entity {
 	bio               ?String
 	image             ?url::Url
 	passwordHash      PasswordHash
-	following         Set<realworld::User>
-	followers         Set<realworld::User>
+	following         Set<User>
+	followers         Set<User>
 	publishedArticles Set<Article>
 	publishedComments Set<Comment>
 }

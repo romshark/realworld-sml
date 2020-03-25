@@ -5,9 +5,9 @@ package realworld {
 GraphRoot = resolver {
 	# user resolves a user by the given username
 	user (username Username) -> ?UserResolver => {
-		user = entity<realworld::User>(predicate: (u) => u.username == username)
+		user = entity<User>(predicate: (u) => u.username == username)
 		& = user as u {
-			realworld::User then UserResolver{user: u}
+			User then UserResolver{user: u}
 		}
 	}
 
@@ -58,18 +58,18 @@ GraphRoot = resolver {
 		ErrUserNotFound or
 		ErrUnauth
 	) => {
-		user = entity<realworld::User>(predicate: (u) => u.username == username)
+		user = entity<User>(predicate: (u) => u.username == username)
 
 		& = {
 			// Ensure the user exists
 			user == Nil then ErrUserNotFound
 
 			// Ensure the client is the user for which the feed for requested
-			!isOwner(owner: realworld::User from user) then ErrUnauth
+			!isOwner(owner: User from user) then ErrUnauth
 
 			else {
 				feedArticles = map(
-					(realworld::User from user).following,
+					(User from user).following,
 					(followee) => followee.publishedArticles,
 				)
 				sorted = std::sortBy(feedArticles, std::Order{
