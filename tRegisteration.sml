@@ -17,16 +17,19 @@ tRegisteration = (
 	bio ?Text,
 	image ?url::Url,
 ) -> (
-	std::Transaction<UserResolver> or
+	std::Mutation<UserResolver> or
 	ErrPasswordInvalid or
 	ErrEmailReserved or
 	ErrUsernameReserved
 ) => {
+	t = std::transaction()
 	userByEmail = entity<User>(
-		predicate: (u) => u.email == email,
+		transaction: t,
+		predicate:   (u) => u.email == email,
 	)
 	userByUsername = entity<User>(
-		predicate: (u) => u.username == username,
+		transaction: t,
+		predicate:   (u) => u.username == username,
 	)
 
 	newUser = User{
@@ -52,7 +55,8 @@ tRegisteration = (
 		// Ensure username uniqueness
 		userByUsername != Nil then ErrUsernameReserved
 
-		else std::Transaction{
+		else std::Mutation{
+			transaction: t,
 			effects: {
 				// Create a new profile
 				std::new(newUser),

@@ -16,16 +16,24 @@ tPublishComment = (
 	authorUsername Username,
 	body CommentBody,
 ) -> (
-	std::Transaction<CommentResolver> or
+	std::Mutation<CommentResolver> or
 	ErrUnauth or
 	ErrUserNotFound or
 	ErrTargetNotFound
 ) => {
+	t = std::transaction()
 	author = entity<User>(
-		predicate: (u) => u.username == authorUsername,
+		transaction: t,
+		predicate:   (u) => u.username == authorUsername,
 	)
-	articleById = entity<Article>(predicate: (a) => a.id == targetId)
-	commentById = entity<Comment>(predicate: (c) => c.id == targetId)
+	articleById = entity<Article>(
+		transaction: t,
+		predicate:   (a) => a.id == targetId,
+	)
+	commentById = entity<Comment>(
+		transaction: t,
+		predicate:   (c) => c.id == targetId,
+	)
 	target = match {
 		articleById == Article then Article from articleById
 		commentById == Comment then Comment from commentById
@@ -62,7 +70,8 @@ tPublishComment = (
 				..follower
 			}
 
-			& = std::Transaction{
+			& = std::Mutation{
+				transaction: t,
 				effects: {
 					// Update the author profile
 					std::mutate(author, (u) => updatedAuthorProfile),

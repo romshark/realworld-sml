@@ -10,16 +10,19 @@ tUnfollowUser = (
 	# followeeUsername identifies the user to be unfollowed
 	followeeUsername Username,
 ) -> (
-	std::Transaction<UserResolver> or
+	std::Mutation<UserResolver> or
 	ErrUnauth or
 	ErrUserNotFound or
 	ErrFolloweeNotFound
 ) => {
+	t = std::transaction()
 	follower = entity<User>(
-		predicate: (u) => u.username == followerUsername,
+		transaction: t,
+		predicate:   (u) => u.username == followerUsername,
 	)
 	followee = entity<User>(
-		predicate: (u) => u.username == followeeUsername,
+		transaction: t,
+		predicate:   (u) => u.username == followeeUsername,
 	)
 
 	& = match {
@@ -41,7 +44,8 @@ tUnfollowUser = (
 				..follower
 			}
 
-			& = std::Transaction{
+			& = std::Mutation{
+				transaction: t,
 				effects: {
 					// Update the follower profile
 					std::mutate(follower, (u) => updatedFollowerProfile),

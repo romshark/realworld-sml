@@ -6,7 +6,7 @@ fragment realworld {
 
 # tDeleteArticle is analogous to "DELETE /api/articles/:slug"
 tDeleteArticle = (articleId uuid::UuidV4) -> (
-	std::Transaction<Nil> or
+	std::Mutation<Nil> or
 	ErrUnauth or
 	ErrArticleNotFound
 ) => {
@@ -19,7 +19,7 @@ tDeleteArticle = (articleId uuid::UuidV4) -> (
 		// Ensure users can only delete their own articles
 		!isOwner(owner: (Article from article).author) then ErrUnauth
 
-		else std::Transaction<Nil>{
+		else std::Mutation<Nil>{
 			effects: {
 				// Delete the article entity
 				// this will automatically delete any references to it

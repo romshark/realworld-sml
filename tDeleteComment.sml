@@ -6,7 +6,7 @@ fragment realworld {
 
 # tDeleteComment is analogous to "DELETE /api/articles/:slug/comments/:id"
 tDeleteComment = (commentId uuid::UuidV4) -> (
-	std::Transaction<Nil> or
+	std::Mutation<Nil> or
 	ErrUnauth or
 	ErrCommentNotFound
 ) => {
@@ -19,7 +19,7 @@ tDeleteComment = (commentId uuid::UuidV4) -> (
 		// Ensure users can only delete their own comments
 		!isOwner(owner: (Comment from comment).author) then ErrUnauth
 
-		else std::Transaction<Nil>{
+		else std::Mutation<Nil>{
 			effects: {
 				// Delete the comment entity
 				// this will automatically delete any references to it

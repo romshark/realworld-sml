@@ -18,12 +18,14 @@ tPublishArticle = (
 	body ArticleBody,
 	tags Set<Tag>,
 ) -> (
-	std::Transaction<ArticleResolver> or
+	std::Mutation<ArticleResolver> or
 	ErrUnauth or
 	ErrUserNotFound
 ) => {
+	t = std::transaction()
 	author = entity<User>(
-		predicate: (u) => u.username == authorUsername,
+		transaction: t,
+		predicate:   (u) => u.username == authorUsername,
 	)
 
 	& = match {
@@ -55,7 +57,8 @@ tPublishArticle = (
 				..follower
 			}
 
-			& = std::Transaction{
+			& = std::Mutation{
+				transaction: t,
 				effects: {
 					// Update the author profile
 					std::mutate(author, (u) => updatedAuthorProfile),

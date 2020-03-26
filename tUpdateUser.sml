@@ -24,18 +24,24 @@ tUpdateUser = (
 	# use NoChange to leave User.image unchanged
 	newImage ?(url::Url or NoChange),
 ) -> (
-	std::Transaction<UserResolver> or
+	std::Mutation<UserResolver> or
 	ErrUnauth or
 	ErrUserNotFound or
 	ErrUsernameReserved or
 	ErrEmailReserved
 ) => {
-	user = entity<User>(predicate: (u) => u.username == username)
+	t = std::transaction()
+	user = entity<User>(
+		transaction: t,
+		predicate:   (u) => u.username == username,
+	)
 	userByNewUsername = entity<User>(
-		predicate: (u) => u.username == newUsername,
+		transaction: t,
+		predicate:   (u) => u.username == newUsername,
 	)
 	userByNewEmail = entity<User>(
-		predicate: (u) => u.email == newEmail,
+		transaction: t,
+		predicate:   (u) => u.email == newEmail,
 	)
 
 	& = match {
@@ -76,7 +82,8 @@ tUpdateUser = (
 				..user
 			}
 
-			& = std::Transaction{
+			& = std::Mutation{
+				transaction: t,
 				effects: {
 					// Update the profile
 					std::mutate(user, (u) => updatedProfile),
