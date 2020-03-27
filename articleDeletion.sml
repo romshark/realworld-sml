@@ -4,9 +4,9 @@ fragment realworld {
 	"std/uuid" 1.0
 }
 
-# articleDeletion is analogous to "DELETE /api/articles/:slug" and resolves
-# to a mutation causing permanent deletion of an article identified by p:articleId
-# in case of success.
+# articleDeletion is analogous to "DELETE /api/articles/:slug"
+# resolving a mutation causing permanent deletion of an article
+# identified by p:articleId in case of success
 articleDeletion = (articleId uuid::UuidV4) -> (
 	std::Mutation<Nil> or
 	ErrUnauth or
