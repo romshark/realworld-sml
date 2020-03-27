@@ -10,8 +10,10 @@ EvArticlePublished = event {
 	article ArticleResolver => ArticleResolver{article: this.article}
 }
 
-# tPublishArticle is analogous to "POST /api/profiles/:username/follow"
-tPublishArticle = (
+# articlePublication is analogous to "POST /api/profiles/:username/follow"
+# resolving a mutation causing the creation of a new t:Article entity
+# in case of success
+articlePublication = (
 	authorUsername Username,
 	title ArticleTitle,
 	description ArticleDescription,

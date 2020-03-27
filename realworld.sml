@@ -81,17 +81,17 @@ GraphRoot = resolver {
 		}
 	}
 
-	tRegister
-	tAuthenticate
+	registration
+	authentication
+	userUpdate
 
-	tFollowUser
-	tUnfollowUser
-	tUpdateUser
+	newFollower
+	canceledFollowership
 
-	tPublishArticle
-	tDeleteArticle
-	tUpdateArticle
+	articlePublication
+	articleDeletion
+	articleUpdate
 
-	tPublishComment
-	tDeleteComment
+	commentPublication
+	commentDeletion
 }

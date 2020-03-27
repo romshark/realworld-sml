@@ -5,8 +5,10 @@ fragment realworld {
 
 NoChange = struct{}
 
-# tUpdateUser is analogous to "PUT /api/user"
-tUpdateUser = (
+# userUpdate is analogous to "PUT /api/user" resolving a mutation
+# causing a permanent mutation of the t:User entity identified by
+# p:username in case of success
+userUpdate = (
 	# username identifies the user to be updated
 	username Username,
 	

@@ -2,18 +2,27 @@ fragment realworld {
 	"std" 1.0
 }
 
-# tUnfollowUser is analogous to "DELETE /api/profiles/:username/follow"
-tUnfollowUser = (
-	# followerUsername identifies the user to cancel the subcription for
+EvFollowed = event {
+	newFollower User
+
+	newFollower UserResolver => UserResolver{user: this.follower}
+}
+
+# newFollower is analogous to "POST /api/profiles/:username/follow"
+# resolving a mutation causing the creation of a subscription of the user
+# identified by p:followerUsername to the user identified by p:followeeUsername
+newFollower = (
+	# followerUsername identifies the user to create the subcription for
 	followerUsername Username,
 
-	# followeeUsername identifies the user to be unfollowed
+	# followeeUsername identifies the user to be followed
 	followeeUsername Username,
 ) -> (
 	std::Mutation<UserResolver> or
 	ErrUnauth or
 	ErrUserNotFound or
-	ErrFolloweeNotFound
+	ErrFolloweeNotFound or
+	ErrFolloweeInvalid
 ) => {
 	t = std::transaction()
 	follower = entity<User>(
@@ -26,21 +35,25 @@ tUnfollowUser = (
 	)
 
 	& = match {
-		// Ensure users cannot unfollow on behalf of other users
-		!isOwner(owner: follower) then ErrUnauth
-
 		// Ensure the follower exists
 		follower == Nil then ErrUserNotFound
 
 		// Ensure the followee exists
 		followee == Nil then ErrFolloweeNotFound
 
+		// Ensure the client is the follower
+		!isOwner(owner: User from follower) then ErrUnauth
+
+		// Ensure the user doesnt follow himself
+		id(User from follower) == id(User from followee) then
+			ErrFolloweeInvalid
+
 		else {
 			follower = User from follower
 			followee = User from followee
 
 			updatedFollowerProfile = User{
-				following: std::setRemove(follower.following, followee),
+				following: std::setInsert(follower.following, followee),
 				..follower
 			}
 
@@ -52,8 +65,13 @@ tUnfollowUser = (
 
 					// Update the followee profile
 					std::mutate(followee, (u) => User{
-						followers: std::setRemove(followee.followers, follower),
+						followers: std::setInsert(followee.followers, follower),
 						..followee
+					}),
+
+					// Notify the followee about a new follower subscription
+					std::event({followee}, EvFollowed{
+						newFollower: follower,
 					}),
 				},
 				data: UserResolver{user: updatedFollowerProfile},

@@ -10,8 +10,11 @@ EvCommentPublished = event {
 	comment CommentResolver => CommentResolver{comment: this.comment}
 }
 
-# tPublishComment is analogous to "POST /api/articles/:slug/comments"
-tPublishComment = (
+# commentPublication is analogous to "POST /api/articles/:slug/comments"
+# resolving a mutation causing the creation of a new t:Comment entity
+# on the the t:Article or t:Comment identified by p:targetId
+# in case of success
+commentPublication = (
 	targetId uuid::UuidV4,
 	authorUsername Username,
 	body CommentBody,

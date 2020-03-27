@@ -4,8 +4,10 @@ fragment realworld {
 	"std/uuid" 1.0
 }
 
-# tDeleteComment is analogous to "DELETE /api/articles/:slug/comments/:id"
-tDeleteComment = (commentId uuid::UuidV4) -> (
+# commentDeletion is analogous to "DELETE /api/articles/:slug/comments/:id"
+# and resolves a mutation causing permanent deletion of the comment
+# identified by p:commentId in case of success
+commentDeletion = (commentId uuid::UuidV4) -> (
 	std::Mutation<Nil> or
 	ErrUnauth or
 	ErrCommentNotFound

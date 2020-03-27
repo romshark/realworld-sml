@@ -4,8 +4,10 @@ fragment realworld {
 	"std/uuid" 1.0
 }
 
-# tUpdateArticle is analogous to "PUT /api/articles/:slug"
-tUpdateArticle = (
+# articleUpdate is analogous to "PUT /api/articles/:slug"
+# resolving a mutation causing a permanent mutation of the
+# article identified by p:articleId in case of success
+articleUpdate = (
 	articleId uuid::UuidV4,
 	title ?ArticleTitle,
 	description ?ArticleDescription,
