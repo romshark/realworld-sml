@@ -10,8 +10,8 @@ AuthenticationResult = struct {
 	image    String
 }
 
-# authentication is analogous to `POST /api/users/login` and resolves
-# t:AuthenticationResult with a valid JWT token
+# authentication is analogous to `POST /api/users/login`
+# resolving a t:AuthenticationResult with a valid JWT token
 authentication = (
 	email    EmailAddress,
 	password Text,
