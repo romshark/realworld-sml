@@ -24,11 +24,7 @@ articlePublication = (
 	ErrUnauth or
 	ErrUserNotFound
 ) => {
-	t = std::transaction()
-	author = entity<User>(
-		transaction: t,
-		predicate:   (u) => u.username == authorUsername,
-	)
+	author = entity<User>(predicate: (u) => u.username == authorUsername)
 
 	& = match {
 		// Ensure the author exists
@@ -60,7 +56,6 @@ articlePublication = (
 			}
 
 			& = std::Mutation{
-				transaction: t,
 				effects: {
 					// Update the author profile
 					std::mutate(author, (u) => updatedAuthorProfile),

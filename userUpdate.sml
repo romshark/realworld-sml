@@ -32,19 +32,9 @@ userUpdate = (
 	ErrUsernameReserved or
 	ErrEmailReserved
 ) => {
-	t = std::transaction()
-	user = entity<User>(
-		transaction: t,
-		predicate:   (u) => u.username == username,
-	)
-	userByNewUsername = entity<User>(
-		transaction: t,
-		predicate:   (u) => u.username == newUsername,
-	)
-	userByNewEmail = entity<User>(
-		transaction: t,
-		predicate:   (u) => u.email == newEmail,
-	)
+	user = entity<User>(predicate: (u) => u.username == username)
+	userByNewUsername = entity<User>(predicate: (u) => u.username == newUsername)
+	userByNewEmail = entity<User>(predicate: (u) => u.email == newEmail)
 
 	& = match {
 		// Ensure the profile exists
@@ -85,7 +75,6 @@ userUpdate = (
 			}
 
 			& = std::Mutation{
-				transaction: t,
 				effects: {
 					// Update the profile
 					std::mutate(user, (u) => updatedProfile),

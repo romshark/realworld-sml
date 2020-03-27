@@ -17,15 +17,8 @@ canceledFollowership = (
 	ErrUserNotFound or
 	ErrFolloweeNotFound
 ) => {
-	t = std::transaction()
-	follower = entity<User>(
-		transaction: t,
-		predicate:   (u) => u.username == followerUsername,
-	)
-	followee = entity<User>(
-		transaction: t,
-		predicate:   (u) => u.username == followeeUsername,
-	)
+	follower = entity<User>(predicate: (u) => u.username == followerUsername)
+	followee = entity<User>(predicate: (u) => u.username == followeeUsername)
 
 	& = match {
 		// Ensure users cannot unfollow on behalf of other users
@@ -47,7 +40,6 @@ canceledFollowership = (
 			}
 
 			& = std::Mutation{
-				transaction: t,
 				effects: {
 					// Update the follower profile
 					std::mutate(follower, (u) => updatedFollowerProfile),

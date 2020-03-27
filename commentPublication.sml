@@ -24,19 +24,9 @@ commentPublication = (
 	ErrUserNotFound or
 	ErrTargetNotFound
 ) => {
-	t = std::transaction()
-	author = entity<User>(
-		transaction: t,
-		predicate:   (u) => u.username == authorUsername,
-	)
-	articleById = entity<Article>(
-		transaction: t,
-		predicate:   (a) => a.id == targetId,
-	)
-	commentById = entity<Comment>(
-		transaction: t,
-		predicate:   (c) => c.id == targetId,
-	)
+	author = entity<User>(predicate: (u) => u.username == authorUsername)
+	articleById = entity<Article>(predicate: (a) => a.id == targetId)
+	commentById = entity<Comment>(predicate: (c) => c.id == targetId)
 	target = match {
 		articleById == Article then Article from articleById
 		commentById == Comment then Comment from commentById
@@ -74,7 +64,6 @@ commentPublication = (
 			}
 
 			& = std::Mutation{
-				transaction: t,
 				effects: {
 					// Update the author profile
 					std::mutate(author, (u) => updatedAuthorProfile),

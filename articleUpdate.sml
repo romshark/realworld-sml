@@ -17,11 +17,7 @@ articleUpdate = (
 	ErrUnauth or
 	ErrArticleNotFound
 ) => {
-	t = std::transaction()
-	article = entity<Article>(
-		transaction: t,
-		predicate:   (a) => a.id == articleId,
-	)
+	article = entity<Article>(predicate: (a) => a.id == articleId)
 
 	& = match {
 		// Ensure only the owner is allowed to update an article
@@ -50,7 +46,6 @@ articleUpdate = (
 			}
 
 			& = std::Mutation{
-				transaction: t,
 				effects: {
 					// Update the article
 					std::mutate(article, (u) => updatedArticle),

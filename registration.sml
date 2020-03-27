@@ -22,15 +22,8 @@ registration = (
 	ErrEmailReserved or
 	ErrUsernameReserved
 ) => {
-	t = std::transaction()
-	userByEmail = entity<User>(
-		transaction: t,
-		predicate:   (u) => u.email == email,
-	)
-	userByUsername = entity<User>(
-		transaction: t,
-		predicate:   (u) => u.username == username,
-	)
+	userByEmail = entity<User>(predicate: (u) => u.email == email)
+	userByUsername = entity<User>(predicate: (u) => u.username == username)
 
 	newUser = User{
 		email:             email,
@@ -56,7 +49,6 @@ registration = (
 		userByUsername != Nil then ErrUsernameReserved
 
 		else std::Mutation{
-			transaction: t,
 			effects: {
 				// Create a new profile
 				std::new(newUser),

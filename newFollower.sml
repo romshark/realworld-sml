@@ -24,15 +24,8 @@ newFollower = (
 	ErrFolloweeNotFound or
 	ErrFolloweeInvalid
 ) => {
-	t = std::transaction()
-	follower = entity<User>(
-		transaction: t,
-		predicate:   (u) => u.username == followerUsername,
-	)
-	followee = entity<User>(
-		transaction: t,
-		predicate:   (u) => u.username == followeeUsername,
-	)
+	follower = entity<User>(predicate: (u) => u.username == followerUsername)
+	followee = entity<User>(predicate: (u) => u.username == followeeUsername)
 
 	& = match {
 		// Ensure the follower exists
@@ -58,7 +51,6 @@ newFollower = (
 			}
 
 			& = std::Mutation{
-				transaction: t,
 				effects: {
 					// Update the follower profile
 					std::mutate(follower, (u) => updatedFollowerProfile),
