@@ -4,7 +4,7 @@ fragment realworld {
 	"std/uuid" 1.0
 }
 
-# articlePublication is analogous to "POST /api/profiles/:username/follow"
+# articlePublication is analogous to "POST /api/articles"
 # resolving a mutation causing the creation of a new t:Article entity
 # in case of success
 articlePublication = (
