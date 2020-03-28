@@ -46,7 +46,7 @@ articlePublication = (
 					author.publishedArticles,
 					newArticle,
 				),
-				..follower
+				..author,
 			}
 
 			& = std::Mutation{
