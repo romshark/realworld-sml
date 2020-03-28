@@ -42,7 +42,7 @@ articleUpdate = (
 					ArticleBody then v
 					else article.body
 				},
-				..article
+				..article,
 			}
 
 			& = std::Mutation{

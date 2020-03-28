@@ -71,7 +71,7 @@ userUpdate = (
 					url::Url then v
 					else Nil
 				},
-				..user
+				..user,
 			}
 
 			& = std::Mutation{
