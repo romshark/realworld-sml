@@ -50,10 +50,10 @@ newFollower = (
 			& = std::Mutation{
 				effects: {
 					// Update the follower profile
-					std::mutate(follower, updatedFollowerProfile),
+					std::mutated(follower, updatedFollowerProfile),
 
 					// Update the followee profile
-					std::mutate(followee, User{
+					std::mutated(followee, User{
 						followers: {
 							..followee.followers,
 							follower,
