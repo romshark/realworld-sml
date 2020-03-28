@@ -1,13 +1,12 @@
 fragment realworld {
 	"std" 1.0
 	"std/time" 1.0
-	"std/uuid" 1.0
 }
 
 # commentDeletion is analogous to "DELETE /api/articles/:slug/comments/:id"
 # resolving a mutation causing permanent deletion of the comment identified
 # by p:commentId in case of success
-commentDeletion = (commentId uuid::UuidV4) -> (
+commentDeletion = (commentId CommentId) -> (
 	std::Mutation<Nil> or
 	ErrUnauth or
 	ErrCommentNotFound

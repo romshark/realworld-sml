@@ -1,12 +1,10 @@
 fragment realworld {
 	"std" 1.0
 	"std/time" 1.0
-	"std/uuid" 1.0
 }
 
 Article = entity {
-	id          uuid::UuidV4
-	slug        String
+	slug        ArticleSlug
 	title       ArticleTitle
 	description ArticleDescription
 	body        ArticleBody

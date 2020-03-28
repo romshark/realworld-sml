@@ -1,7 +1,6 @@
 fragment realworld {
 	"std" 1.0
 	"std/time" 1.0
-	"std/uuid" 1.0
 }
 
 # articlePublication is analogous to "POST /api/articles"
@@ -31,7 +30,7 @@ articlePublication = (
 			author = User from author
 
 			newArticle = Article {
-				id:          uuid::v4(),
+				slug:        uniqueArticleSlug(title),
 				title:       title,
 				description: description,
 				body:        body,

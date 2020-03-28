@@ -12,15 +12,15 @@ GraphRoot = resolver {
 	}
 
 	# article resolves an article by the given id
-	article (articleId uuid::UuidV4) -> ?ArticleResolver => {
-		article = entity<Article>(predicate: (a) => a.id == articleId)
+	article (slug String) -> ?ArticleResolver => {
+		article = entity<Article>(predicate: (a) => a.id == slug)
 		& = article as a {
 			Article then ArticleResolver{article: a}
 		}
 	}
 
 	# comment resolves an comment by the given id
-	comment (commentId uuid::UuidV4) -> ?CommentResolver => {
+	comment (commentId CommentId) -> ?CommentResolver => {
 		comment = entity<Comment>(predicate: (a) => a.id == commentId)
 		& = comment as a {
 			Comment then CommentResolver{comment: a}

@@ -1,18 +1,17 @@
 fragment realworld {
 	"std" 1.0
 	"std/time" 1.0
-	"std/uuid" 1.0
 }
 
 # articleDeletion is analogous to "DELETE /api/articles/:slug"
 # resolving a mutation causing permanent deletion of an article
-# identified by p:articleId in case of success
-articleDeletion = (articleId uuid::UuidV4) -> (
+# identified by p:slug in case of success
+articleDeletion = (slug String) -> (
 	std::Mutation<Nil> or
 	ErrUnauth or
 	ErrArticleNotFound
 ) => {
-	article = entity<Article>(predicate: (a) => a.id == articleId)
+	article = entity<Article>(predicate: (a) => a.id == slug)
 
 	& = match {
 		// Ensure the article exists

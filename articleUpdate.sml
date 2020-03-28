@@ -1,14 +1,13 @@
 fragment realworld {
 	"std" 1.0
 	"std/time" 1.0
-	"std/uuid" 1.0
 }
 
 # articleUpdate is analogous to "PUT /api/articles/:slug"
 # resolving a mutation causing a permanent mutation of the
-# article identified by p:articleId in case of success
+# article identified by p:slug in case of success
 articleUpdate = (
-	articleId uuid::UuidV4,
+	slug String,
 	title ?ArticleTitle,
 	description ?ArticleDescription,
 	body ?ArticleBody,
@@ -17,7 +16,7 @@ articleUpdate = (
 	ErrUnauth or
 	ErrArticleNotFound
 ) => {
-	article = entity<Article>(predicate: (a) => a.id == articleId)
+	article = entity<Article>(predicate: (a) => a.slug == slug)
 
 	& = match {
 		// Ensure only the owner is allowed to update an article

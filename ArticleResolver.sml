@@ -1,15 +1,11 @@
 fragment realworld {
 	"std" 1.0
 	"std/time" 1.0
-	"std/uuid" 1.0
 }
 
 ArticleResolver = resolver {
 	article Article
 } {
-	# id resolves the unique identifier of the article
-	id uuid::UuidV4 => this.article.id
-
 	# title resolves the article's title
 	title ArticleTitle => this.article.title
 
