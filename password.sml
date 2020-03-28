@@ -4,6 +4,20 @@ fragment realworld {
 	"std/crypto/scrypt" 1.0
 }
 
+minPasswordLen = 8
+maxPasswordLen = 512
+
+Password = String
+
+new Password (p) => match {
+	len(password) < minPasswordLen or
+		len(password) > maxPasswordLen then error<ErrPasswordInvalid>{
+		actual: len(password),
+		minLen: minPasswordLen,
+		maxLen: maxPasswordLen,
+	}
+}
+
 PasswordHash = struct {
 	salt Array<Byte>
 	hash Array<Byte>

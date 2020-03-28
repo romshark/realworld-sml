@@ -4,21 +4,15 @@ fragment realworld {
 	"std/mail" 1.0
 }
 
-ErrPasswordInvalid = struct {
-	minLen Uint32
-	maxLen Uint32
-}
-
 # registration is analogous to "POST /api/users"
 registration = (
 	username Username,
 	email EmailAddress,
-	password String,
+	password Password,
 	bio ?String,
 	image ?url::Url,
 ) -> (
 	std::Mutation<UserResolver> or
-	ErrPasswordInvalid or
 	ErrEmailReserved or
 	ErrUsernameReserved
 ) => {
@@ -36,12 +30,6 @@ registration = (
 	}
 
 	& = match {
-		// Verify password
-		len(password) < 8 or len(password) > 512 then ErrPasswordInvalid{
-			minLen: 8,
-			maxLen: 512,
-		}
-
 		// Ensure email uniqueness
 		userByEmail != Nil then ErrEmailReserved
 
