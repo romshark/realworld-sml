@@ -4,12 +4,6 @@ fragment realworld {
 	"std/uuid" 1.0
 }
 
-EvArticlePublished = event {
-	article Article
-
-	article ArticleResolver => ArticleResolver{article: this.article}
-}
-
 # articlePublication is analogous to "POST /api/profiles/:username/follow"
 # resolving a mutation causing the creation of a new t:Article entity
 # in case of success
@@ -62,11 +56,6 @@ articlePublication = (
 
 					// Create a new article entity
 					std::new(newArticle),
-
-					// Notify all followers about a new article being published
-					std::event(author.followers, EvArticlePublished{
-						article: newArticle,
-					}),
 				},
 				data: ArticleResolver{article: newArticle},
 			}

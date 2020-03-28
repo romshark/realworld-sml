@@ -2,12 +2,6 @@ fragment realworld {
 	"std" 1.0
 }
 
-EvFollowed = event {
-	newFollower User
-
-	newFollower UserResolver => UserResolver{user: this.follower}
-}
-
 # newFollower is analogous to "POST /api/profiles/:username/follow"
 # resolving a mutation causing the creation of a subscription of the user
 # identified by p:followerUsername to the user identified by p:followeeUsername
@@ -59,11 +53,6 @@ newFollower = (
 					std::mutate(followee, (u) => User{
 						followers: std::setInsert(followee.followers, follower),
 						..followee
-					}),
-
-					// Notify the followee about a new follower subscription
-					std::event({followee}, EvFollowed{
-						newFollower: follower,
 					}),
 				},
 				data: UserResolver{user: updatedFollowerProfile},

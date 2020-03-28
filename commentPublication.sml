@@ -4,12 +4,6 @@ fragment realworld {
 	"std/uuid" 1.0
 }
 
-EvCommentPublished = event {
-	comment Comment
-
-	comment CommentResolver => CommentResolver{comment: this.comment}
-}
-
 # commentPublication is analogous to "POST /api/articles/:slug/comments"
 # resolving a mutation causing the creation of a new t:Comment entity
 # on the the t:Article or t:Comment identified by p:targetId
@@ -70,17 +64,6 @@ commentPublication = (
 
 					// Create a new comment entity
 					std::new(newComment),
-
-					// Notify all the author about a new comment being published
-					std::event(
-						{target as t {
-							Article then t.author
-							Comment then t.author
-						}},
-						EvCommentPublished{
-							comment: newComment,
-						},
-					),
 				},
 				data: CommentResolver{comment: newComment},
 			}
