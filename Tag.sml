@@ -5,6 +5,6 @@ fragment realworld {
 Tag = String
 
 new Tag (v) => match {
-	len(v) < 1 then error("tag too short")
-	len(v) > 48 then error("tag too long")
+	v == "" then error("invalid tag (empty)")
+	len(v) > 48 then error("invalid tag (too long)")
 }

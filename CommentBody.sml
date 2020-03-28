@@ -5,6 +5,6 @@ fragment realworld {
 CommentBody = String
 
 new CommentBody (v) => match {
-	len(v) < 1 then error("comment body too short")
-	len(v) > 65536 then error("comment body too long")
+	v == "" then error("invalid comment body (empry)")
+	len(v) > 65536 then error("invalid comment body (too long)")
 }

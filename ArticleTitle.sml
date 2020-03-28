@@ -5,6 +5,6 @@ fragment realworld {
 ArticleTitle = String
 
 new ArticleTitle (v) => match {
-	len(v) < 2 then error("article title too short")
-	len(v) > 256 then error("article title too long")
+	len(v) < 2 then error("invalid article title (too short)")
+	len(v) > 256 then error("invalid article title (too long)")
 }

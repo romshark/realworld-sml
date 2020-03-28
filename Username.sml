@@ -5,6 +5,6 @@ fragment realworld {
 Username = String
 
 new Username (v) => match {
-	len(v) < 3 then error("username too short")
-	len(v) > 256 then error("username too long")
+	len(v) < 3 then error("invalid username (too short)")
+	len(v) > 256 then error("invalid username (too long)")
 }
