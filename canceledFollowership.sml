@@ -35,7 +35,7 @@ canceledFollowership = (
 			followee = User from followee
 
 			updatedFollowerProfile = User{
-				following: std::setRemove(follower.following, followee),
+				following: std::setWithout(follower.following, followee),
 				..follower,
 			}
 
@@ -46,7 +46,7 @@ canceledFollowership = (
 
 					// Update the followee profile
 					std::mutated(followee, User{
-						followers: std::setRemove(followee.followers, follower),
+						followers: std::setWithout(followee.followers, follower),
 						..followee,
 					}),
 				},
