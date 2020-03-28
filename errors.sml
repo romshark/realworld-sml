@@ -10,3 +10,8 @@ ErrArticleNotFound = Nil
 ErrCommentNotFound = Nil
 ErrTargetNotFound = Nil
 ErrUserNotFound = Nil
+ErrPasswordInvalid = struct {
+	actual Uint32
+	minLen Uint32
+	maxLen Uint32
+}

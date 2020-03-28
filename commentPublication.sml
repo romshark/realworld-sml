@@ -50,17 +50,17 @@ commentPublication = (
 			}
 
 			updatedAuthorProfile = User{
-				publishedComments: std::setInsert(
-					author.publishedComments,
+				publishedComments: {
+					..author.publishedComments,
 					newComment,
-				),
-				..follower
+				},
+				..author,
 			}
 
 			& = std::Mutation{
 				effects: {
 					// Update the author profile
-					std::mutate(author, (u) => updatedAuthorProfile),
+					std::mutated(author, updatedAuthorProfile),
 
 					// Create a new comment entity
 					std::new(newComment),

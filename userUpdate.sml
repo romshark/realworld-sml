@@ -71,13 +71,13 @@ userUpdate = (
 					url::Url then v
 					else Nil
 				},
-				..user
+				..user,
 			}
 
 			& = std::Mutation{
 				effects: {
 					// Update the profile
-					std::mutate(user, (u) => updatedProfile),
+					std::mutated(user, updatedProfile),
 				},
 				data: UserResolver{user: updatedProfile},
 			}

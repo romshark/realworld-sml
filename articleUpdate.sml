@@ -42,13 +42,13 @@ articleUpdate = (
 					ArticleBody then v
 					else article.body
 				},
-				..article
+				..article,
 			}
 
 			& = std::Mutation{
 				effects: {
 					// Update the article
-					std::mutate(article, (u) => updatedArticle),
+					std::mutated(article, updatedArticle),
 				},
 				data: ArticleResolver{article: updatedArticle},
 			}

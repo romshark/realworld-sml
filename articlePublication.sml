@@ -4,7 +4,7 @@ fragment realworld {
 	"std/uuid" 1.0
 }
 
-# articlePublication is analogous to "POST /api/profiles/:username/follow"
+# articlePublication is analogous to "POST /api/articles"
 # resolving a mutation causing the creation of a new t:Article entity
 # in case of success
 articlePublication = (
@@ -42,17 +42,17 @@ articlePublication = (
 			}
 
 			updatedAuthorProfile = User{
-				publishedArticles: std::setInsert(
-					author.publishedArticles,
+				publishedArticles: {
+					..author.publishedArticles,
 					newArticle,
-				),
-				..follower
+				},
+				..author,
 			}
 
 			& = std::Mutation{
 				effects: {
 					// Update the author profile
-					std::mutate(author, (u) => updatedAuthorProfile),
+					std::mutated(author, updatedAuthorProfile),
 
 					// Create a new article entity
 					std::new(newArticle),
