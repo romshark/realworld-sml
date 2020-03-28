@@ -40,7 +40,10 @@ newFollower = (
 			followee = User from followee
 
 			updatedFollowerProfile = User{
-				following: std::setInsert(follower.following, followee),
+				following: {
+					..follower.following,
+					followee,
+				},
 				..follower,
 			}
 
@@ -51,7 +54,10 @@ newFollower = (
 
 					// Update the followee profile
 					std::mutate(followee, (u) => User{
-						followers: std::setInsert(followee.followers, follower),
+						followers: {
+							..followee.followers,
+							follower,
+						},
 						..followee,
 					}),
 				},

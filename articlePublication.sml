@@ -42,10 +42,10 @@ articlePublication = (
 			}
 
 			updatedAuthorProfile = User{
-				publishedArticles: std::setInsert(
-					author.publishedArticles,
+				publishedArticles: {
+					..author.publishedArticles,
 					newArticle,
-				),
+				},
 				..author,
 			}
 

@@ -50,10 +50,10 @@ commentPublication = (
 			}
 
 			updatedAuthorProfile = User{
-				publishedComments: std::setInsert(
-					author.publishedComments,
+				publishedComments: {
+					..author.publishedComments,
 					newComment,
-				),
+				},
 				..author,
 			}
 
