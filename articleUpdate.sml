@@ -48,7 +48,7 @@ articleUpdate = (
 			& = std::Mutation{
 				effects: {
 					// Update the article
-					std::mutate(article, (u) => updatedArticle),
+					std::mutate(article, updatedArticle),
 				},
 				data: ArticleResolver{article: updatedArticle},
 			}

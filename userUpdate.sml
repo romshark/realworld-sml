@@ -77,7 +77,7 @@ userUpdate = (
 			& = std::Mutation{
 				effects: {
 					// Update the profile
-					std::mutate(user, (u) => updatedProfile),
+					std::mutate(user, updatedProfile),
 				},
 				data: UserResolver{user: updatedProfile},
 			}

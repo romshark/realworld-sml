@@ -60,7 +60,7 @@ commentPublication = (
 			& = std::Mutation{
 				effects: {
 					// Update the author profile
-					std::mutate(author, (u) => updatedAuthorProfile),
+					std::mutate(author, updatedAuthorProfile),
 
 					// Create a new comment entity
 					std::new(newComment),
