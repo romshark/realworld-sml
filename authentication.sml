@@ -13,12 +13,16 @@ AuthenticationResult = struct {
 # authentication is analogous to `POST /api/users/login`
 # resolving a t:AuthenticationResult with a valid JWT token
 authentication = (
-	email    EmailAddress,
+	email    String,
 	password String,
 ) -> (AuthenticationResult or ErrWrongCredentials) => {
 	user = entity<User>(predicate: (u) => u.email == email)
+	email = EmailAddress from email
 
 	& = match {
+		// Ensure email is a valid email address
+		email == std::Error then ErrWrongCredentials
+
 		// Ensure the user exists
 		user == Nil then ErrWrongCredentials
 
@@ -29,7 +33,7 @@ authentication = (
 		else {
 			u = User from user
 			& = AuthenticationResult {
-				email:    email,
+				email:    EmailAddress from email,
 				token:    newAccessToken(u),
 				username: u.username,
 				bio:      u.bio,
