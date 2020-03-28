@@ -13,8 +13,8 @@ ErrPasswordInvalid = error{
 registration = (
 	username Username,
 	email EmailAddress,
-	password Text,
-	bio ?Text,
+	password String,
+	bio ?String,
 	image ?url::Url,
 ) -> (
 	std::Mutation<UserResolver> or
@@ -55,7 +55,7 @@ registration = (
 
 				// Send account creation email
 				mail::send(
-					Text from email,
+					String from email,
 					accountCreationEmail(username, email),
 				),
 			},

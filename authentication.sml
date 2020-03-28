@@ -14,7 +14,7 @@ AuthenticationResult = struct {
 # resolving a t:AuthenticationResult with a valid JWT token
 authentication = (
 	email    EmailAddress,
-	password Text,
+	password String,
 ) -> (AuthenticationResult or ErrWrongCredentials) => {
 	user = entity<User>(predicate: (u) => u.email == email)
 
