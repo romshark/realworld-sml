@@ -54,7 +54,7 @@ commentPublication = (
 					author.publishedComments,
 					newComment,
 				),
-				..follower
+				..author,
 			}
 
 			& = std::Mutation{
