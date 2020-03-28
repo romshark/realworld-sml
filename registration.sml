@@ -4,7 +4,7 @@ fragment realworld {
 	"std/mail" 1.0
 }
 
-ErrPasswordInvalid = error{
+ErrPasswordInvalid = struct {
 	minLen Uint32
 	maxLen Uint32
 }
